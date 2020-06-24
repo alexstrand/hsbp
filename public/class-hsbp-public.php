@@ -133,7 +133,7 @@ function get_hubspot_posts( $atts ) {
 	        // HubSpot Post Variables
 	        $title = $hubspot_post->html_title;
 	        $publish_date = date('d F Y', $hubspot_post->created);
-	        $excerpt = $hubspot_post->meta_description;
+	        $excerpt = wp_trim_words( $hubspot_post->meta_description, 25, '...' );
 	        $url = esc_url($hubspot_post->url);
 	        $featured_image = $hubspot_post->featured_image;
 	        if ( $featured_image == '' ) {
