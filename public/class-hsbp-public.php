@@ -142,15 +142,15 @@ function get_hubspot_posts( $atts ) {
 	        
 	        // HTML
 	        $html .= '<article class="hsbp_post post">';
-	        $html .=	'<div class="hsbp_image" style="background-image: url(' . $featured_image . ')"></div>';
+	        $html .=	'<div class="hsbp_image" style="background-image: url(' . __( $featured_image ) . ')"></div>';
 	        $html .=	'<div class="hspb_text">';
 	        $html .=		'<h6 class="hsbp_meta line-break">' . $publish_date . '</h6>';
-	        $html .=		'<a href="' . $url . '" title="' . $title . '">';
-	        $html .=			'<h5 class="hsbp_title">' . $title . '</h5>';
+	        $html .=		'<a href="' . __( $url ) . '" title="' . __( $title ) . '">';
+	        $html .=			'<h5 class="hsbp_title">' . __( $title ) . '</h5>';
 	        $html .=		'</a>';
-	        $html .=		'<p class="hsbp_excerpt">' . esc_html( $excerpt ) . '</p>';
-	        $html .=		'<a href="' . $url . '" title="' . $title . '">';
-	        $html .=			'<div class="hsbp_read-more-btn">></div>';
+	        $html .=		'<p class="hsbp_excerpt">' . __( $excerpt ) . '</p>';
+	        $html .=		'<a href="' . __( $url ) . '" title="' . __( $title ) . '">';
+	        $html .=			'<div class="blue-post-button arrow">></div>';
 	        $html .=		'</a>';
 	        $html .=	'</div>';
 	        $html .= '</article>';
