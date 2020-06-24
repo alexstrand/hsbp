@@ -35,7 +35,21 @@
     }
      
     #hsbp > article {
-        width: 45%;
+        width: 50%;
+        display: inline-block;
+        vertical-align: top;
+    }
+ }
+ 
+  @media (min-width: 992px) {
+     
+    #hsbp {
+        display: inline-block;
+    }
+     
+    #hsbp > article {
+        padding: 30px 30px 60px 30px;
+        width: 33.333333333333%;
         display: inline-block;
         vertical-align: top;
     }
