@@ -2,3 +2,41 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+ 
+ #hsbp {
+     width: 100%;
+ }
+ 
+ #hsbp > article {
+     width: 100%;
+     padding: 20px;
+     color: #4f4d49;
+ }
+ 
+  #hsbp > article a {
+      text-decoration: none;
+      color: #4f4d49;
+  }
+ 
+ #hsbp > article > .hsbp_image {
+    height: 0;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding-bottom: 70%;
+    max-width: 100%;
+    width: 100%;
+ }
+ 
+ @media (min-width: 768px) {
+     
+    #hsbp {
+        display: inline-block;
+    }
+     
+    #hsbp > article {
+        width: 45%;
+        display: inline-block;
+        vertical-align: top;
+    }
+ }

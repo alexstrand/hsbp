@@ -102,6 +102,13 @@ class Hsbp_Public {
 
 }
 
+//CSS Enque
+function hsbp_scripts() {
+    wp_enqueue_style( 'hsbp-styles', '/wp-content/plugins/hsbp/public/css/hsbp-public.css' );
+    //wp_enqueue_script( 'script-name', get_template_directory_uri() . '/js/example.js', array(), '1.0.0', true );
+}
+add_action( 'wp_enqueue_scripts', 'hsbp_scripts' );
+
 //Setup ShortCode
 function get_hubspot_posts( $atts ) {
 	
@@ -135,13 +142,13 @@ function get_hubspot_posts( $atts ) {
 	        
 	        // HTML
 	        $html .= '<article class="hsbp_post post">';
-	        $html .=	'<div class="hsbp_image" style="background-image(' . $featured_image . ')"></div>';
+	        $html .=	'<div class="hsbp_image" style="background-image: url(' . $featured_image . ')"></div>';
 	        $html .=	'<div class="hspb_text">';
-	        $html .=		'<h6 class="hsbp_meta">' . $publish_date . '</h6>';
+	        $html .=		'<h6 class="hsbp_meta line-break">' . $publish_date . '</h6>';
 	        $html .=		'<a href="' . $url . '" title="' . $title . '">';
 	        $html .=			'<h5 class="hsbp_title">' . $title . '</h5>';
 	        $html .=		'</a>';
-	        $html .=		'<div class="hsbp_excerpt">' . esc_html( $excerpt ) . '</div>';
+	        $html .=		'<p class="hsbp_excerpt">' . esc_html( $excerpt ) . '</p>';
 	        $html .=		'<a href="' . $url . '" title="' . $title . '">';
 	        $html .=			'<div class="hsbp_read-more-btn">></div>';
 	        $html .=		'</a>';
