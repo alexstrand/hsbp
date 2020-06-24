@@ -118,11 +118,18 @@ function get_hubspot_posts( $atts ) {
 
     // Takes raw data from the request
     if ( $hubspot_key === NULL ) { return __('Unable to access HubSpot. Please use a valid HubSpot API key.'); }
-    if( $content === FALSE ) { return __('Unable to access HubSpot with the provided API key.'); }
-	$json = @file_get_contents('https://api.hubapi.com/content/api/v2/blog-posts?hapikey=' . $hubspot_key);
-	
-	// Converts it into a PHP object
-	$data = json_decode($json);
+    
+    // Check for WP Transient
+    if ( ( $posts = get_transient( "hubspot_posts" . $hubspot_key ) ) === false) :
+    	// GET api file contents from HubSpot
+    	$json = file_get_contents('https://api.hubapi.com/content/api/v2/blog-posts?hapikey=' . $hubspot_key);
+    	// Convert API JSON it into a PHP object
+		$data = json_decode($json);
+		// Set new transient
+		set_transient( "hubspot_posts" . $hubspot_key, $data, HOUR_IN_SECONDS );
+    else :
+    	$data = get_transient( "hubspot_posts" . $hubspot_key );
+    endif; 
 
 	// The Loop
 	if ( $data === NULL ) { return __('There was no HubSpot data to retreive.'); }
