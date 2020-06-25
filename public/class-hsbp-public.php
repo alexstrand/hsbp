@@ -151,7 +151,7 @@ function get_hubspot_posts( $atts ) {
 	        	$featured_image = $fallback_img_url;
 	        }
 	        
-	        if ( $article_lang != $language ) {
+	        if ( $article_lang != $language && $language != NULL ) {
 	        	$filter = 'style="display: none;"';
 	        }
 	        
