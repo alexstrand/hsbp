@@ -102,20 +102,20 @@ class Hsbp_Public {
 
 }
 
-//CSS Enque
+// CSS Enqueue
 function hsbp_scripts() {
     wp_enqueue_style( 'hsbp-styles', '/wp-content/plugins/hsbp/public/css/hsbp-public.css' );
-    //wp_enqueue_script( 'script-name', get_template_directory_uri() . '/js/example.js', array(), '1.0.0', true );
 }
 add_action( 'wp_enqueue_scripts', 'hsbp_scripts' );
 
-//Setup ShortCode
+// Setup ShortCode
 function get_hubspot_posts( $atts ) {
 	
 	// Get JSON data from HubSpot API
-    $hubspot_key = $atts['key'];
-    $fallback_img_url = $atts['fallback-image'];
-
+    $hubspot_key		= $atts['key'];
+    $fallback_img_url	= $atts['fallback-image'];
+    $language			= $atts['language'];
+    
     // Takes raw data from the request
     if ( $hubspot_key === NULL ) { return __('Unable to access HubSpot. Please use a valid HubSpot API key.'); }
     
@@ -138,20 +138,28 @@ function get_hubspot_posts( $atts ) {
 		foreach( $data->objects as $hubspot_post ) :
 	         
 	        // HubSpot Post Variables
-	        $title = $hubspot_post->html_title;
-	        $publish_date = date('d F Y', $hubspot_post->created);
-	        $excerpt = wp_trim_words( $hubspot_post->meta_description, 25, '...' );
-	        $url = esc_url($hubspot_post->url);
+	        $filter;
+	        $title			= $hubspot_post->html_title;
+	        $publish_date	= $hubspot_post->created;
+	    	$publish_date	= date( 'd M Y', floor( $publish_date / 1000 ) );
+	        $excerpt		= wp_trim_words( $hubspot_post->meta_description, 25, '...' );
+	        $url			= esc_url($hubspot_post->url);
 	        $featured_image = $hubspot_post->featured_image;
+	        $article_lang	= 'en';//$hubspot_post->lang;
+	        
 	        if ( $featured_image == '' ) {
 	        	$featured_image = $fallback_img_url;
 	        }
 	        
+	        if ( $article_lang != $language ) {
+	        	$filter = 'style="display: none;"';
+	        }
+	        
 	        // HTML
-	        $html .= '<article class="hsbp_post post">';
+	        $html .= '<article class="hsbp_post post" ' . $filter . '>';
 	        $html .=	'<div class="hsbp_image" style="background-image: url(' . __( $featured_image ) . ')"></div>';
 	        $html .=	'<div class="hspb_text">';
-	        $html .=		'<h6 class="hsbp_meta line-break">' . $publish_date . '</h6>';
+	        $html .=		'<h6 class="hsbp_meta line-break">' . __( $publish_date ) . '</h6>';
 	        $html .=		'<a href="' . __( $url ) . '" title="' . __( $title ) . '">';
 	        $html .=			'<h5 class="hsbp_title">' . __( $title ) . '</h5>';
 	        $html .=		'</a>';
@@ -165,7 +173,7 @@ function get_hubspot_posts( $atts ) {
 	    endforeach;
 	    $html .= '</div>';
     
-    // Return HTML
+    // Return html
     return $html;
     
 }
