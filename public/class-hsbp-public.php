@@ -138,7 +138,6 @@ function get_hubspot_posts( $atts ) {
 		foreach( $data->objects as $hubspot_post ) :
 	         
 	        // HubSpot Post Variables
-	        $filter 		= 'style="display: none;"';
 	        $title			= $hubspot_post->html_title;
 	        $publish_date	= $hubspot_post->created;
 	    	$publish_date	= date( 'd M Y', floor( $publish_date / 1000 ) );
@@ -147,28 +146,29 @@ function get_hubspot_posts( $atts ) {
 	        $featured_image = $hubspot_post->featured_image;
 	        $article_lang	= $hubspot_post->language;
 	        
-	        if ( $featured_image == '' ) {
+	        if ( $featured_image == '' ) :
 	        	$featured_image = $fallback_img_url;
-	        }
+	        endif;
 	        
-	        if ( $article_lang == $language ) {
-	        	$filter = 'style="display: inline-block;"';
-	        }
-	        
-	        // HTML
-	        $html .= '<article lang="' . $article_lang . ' ' . $language . '" class="hsbp_post post" ' . $filter . '>';
-	        $html .=	'<div class="hsbp_image" style="background-image: url(' . __( $featured_image ) . ')"></div>';
-	        $html .=	'<div class="hspb_text">';
-	        $html .=		'<h6 class="hsbp_meta line-break">' . __( $publish_date ) . '</h6>';
-	        $html .=		'<a href="' . __( $url ) . '" title="' . __( $title ) . '">';
-	        $html .=			'<h5 class="hsbp_title">' . __( $title ) . '</h5>';
-	        $html .=		'</a>';
-	        $html .=		'<p class="hsbp_excerpt">' . __( $excerpt ) . '</p>';
-	        $html .=		'<a href="' . __( $url ) . '" title="' . __( $title ) . '">';
-	        $html .=			'<div class="blue-post-button arrow">></div>';
-	        $html .=		'</a>';
-	        $html .=	'</div>';
-	        $html .= '</article>';
+	        // Display post if the correct language is called.
+	        if ( $article_lang == $language ) :
+	        	
+	        	// HTML
+		        $html .= '<article lang="' . $article_lang . ' ' . $language . '" class="hsbp_post post">';
+		        $html .=	'<div class="hsbp_image" style="background-image: url(' . __( $featured_image ) . ')"></div>';
+		        $html .=	'<div class="hspb_text">';
+		        $html .=		'<h6 class="hsbp_meta line-break">' . __( $publish_date ) . '</h6>';
+		        $html .=		'<a href="' . __( $url ) . '" title="' . __( $title ) . '">';
+		        $html .=			'<h5 class="hsbp_title">' . __( $title ) . '</h5>';
+		        $html .=		'</a>';
+		        $html .=		'<p class="hsbp_excerpt">' . __( $excerpt ) . '</p>';
+		        $html .=		'<a href="' . __( $url ) . '" title="' . __( $title ) . '">';
+		        $html .=			'<div class="blue-post-button arrow">></div>';
+		        $html .=		'</a>';
+		        $html .=	'</div>';
+		        $html .= '</article>';
+	        	
+	        endif;
 	
 	    endforeach;
 	    $html .= '</div>';
