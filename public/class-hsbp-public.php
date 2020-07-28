@@ -138,25 +138,25 @@ function get_hubspot_posts( $atts ) {
 		foreach( $data->objects as $hubspot_post ) :
 	         
 	        // HubSpot Post Variables
-	        $filter;
+	        $filter 		= 'style="display: none;"';
 	        $title			= $hubspot_post->html_title;
 	        $publish_date	= $hubspot_post->created;
 	    	$publish_date	= date( 'd M Y', floor( $publish_date / 1000 ) );
 	        $excerpt		= wp_trim_words( $hubspot_post->meta_description, 25, '...' );
 	        $url			= esc_url($hubspot_post->url);
 	        $featured_image = $hubspot_post->featured_image;
-	        $article_lang	= 'en';//$hubspot_post->lang;
+	        $article_lang	= $hubspot_post->language;
 	        
 	        if ( $featured_image == '' ) {
 	        	$featured_image = $fallback_img_url;
 	        }
 	        
-	        if ( $article_lang != $language && $language != NULL ) {
-	        	$filter = 'style="display: none;"';
+	        if ( $article_lang == $language ) {
+	        	$filter = 'style="display: inline-block;"';
 	        }
 	        
 	        // HTML
-	        $html .= '<article class="hsbp_post post" ' . $filter . '>';
+	        $html .= '<article lang="' . $article_lang . ' ' . $language . '" class="hsbp_post post" ' . $filter . '>';
 	        $html .=	'<div class="hsbp_image" style="background-image: url(' . __( $featured_image ) . ')"></div>';
 	        $html .=	'<div class="hspb_text">';
 	        $html .=		'<h6 class="hsbp_meta line-break">' . __( $publish_date ) . '</h6>';
